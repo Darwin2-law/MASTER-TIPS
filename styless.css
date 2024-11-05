@@ -1,0 +1,118 @@
+/* Global Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #6e7dff, #8e44ad); /* Background gradient */
+    height: 100vh;
+}
+
+.container {
+    background-color: white;
+    padding: 30px 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    width: 80%;
+    max-width: 1000px;
+    text-align: center;
+    position: relative; /* So the close button is positioned correctly */
+}
+
+.close-btn-container {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+
+.close-btn {
+    font-size: 30px;
+    color: #4CAF50;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.close-btn:hover {
+    color: #e74c3c; /* Red color on hover */
+}
+
+h2 {
+    font-size: 28px;
+    color: #4CAF50; /* Green title */
+    margin-bottom: 30px;
+}
+
+/* Excel-like Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 14px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 16px;
+    color: #333;
+}
+
+th {
+    background-color: #4CAF50; /* Green background */
+    color: white;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #f2f2f2; /* Zebra striping */
+}
+
+tbody tr:hover {
+    background-color: #dfe6e9; /* Light hover effect */
+}
+
+/* Responsive Table */
+@media screen and (max-width: 768px) {
+    table {
+        font-size: 12px;
+    }
+
+    th, td {
+        padding: 8px;
+    }
+}
+
+/* Button Style */
+button {
+    padding: 12px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    margin: 10px 5px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+button:active {
+    background-color: #3e8e41;
+}
+
+button:focus {
+    outline: none;
+}

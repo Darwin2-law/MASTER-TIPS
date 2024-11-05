@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Chat</title>
+    <link rel="stylesheet" href="chart.css">
+</head>
+<body>
+    <!-- Close Button -->
+    <a href="index.html" class="close-button">X</a>
+    
+    <h2>Community Chat</h2>
+
+    <!-- Chat Container -->
+    <div id="chatContainer" class="chat-container"></div>
+
+    <!-- Message Input Section -->
+    <div class="message-input">
+        <input type="text" id="messageInput" placeholder="Type your message..." required>
+        <button id="sendMessageBtn">Send</button>
+    </div>
+
+    
+
+    <script>
+        // Function to send a message
+        function sendMessage() {
+            const messageInput = document.getElementById("messageInput");
+            const messageText = messageInput.value.trim();
+
+            if (messageText !== "") {
+                const chatContainer = document.getElementById("chatContainer");
+                const messageElement = document.createElement("div");
+                messageElement.classList.add("message");
+                messageElement.textContent = messageText;
+
+                chatContainer.appendChild(messageElement);
+                messageInput.value = ""; // Clear the input field
+
+                // Save chat to localStorage
+                saveChat();
+            }
+        }
+
+        // Function to save chat messages to localStorage
+        function saveChat() {
+            const messages = Array.from(document.querySelectorAll(".message")).map(msg => msg.textContent);
+            localStorage.setItem("ChatMessages", JSON.stringify(messages));
+        }
+
+        // Function to populate the chat from localStorage
+        function populateChat() {
+            const savedMessages = JSON.parse(localStorage.getItem("ChatMessages")) || [];
+            const chatContainer = document.getElementById("chatContainer");
+            chatContainer.innerHTML = ""; // Clear existing messages
+
+            savedMessages.forEach(msg => {
+                const messageElement = document.createElement("div");
+                messageElement.classList.add("message");
+                messageElement.textContent = msg;
+                chatContainer.appendChild(messageElement);
+            });
+        }
+
+        // Function to clear chat messages
+        function clearChat() {
+            if (confirm("Are you sure you want to clear the chat?")) {
+                localStorage.removeItem("ChatMessages");
+                populateChat(); // Refresh the chat
+                alert("Chat has been cleared.");
+            }
+        }
+
+        // Event listeners
+        document.getElementById("sendMessageBtn").addEventListener("click", sendMessage);
+        document.getElementById("clearChatBtn").addEventListener("click", clearChat);
+        document.getElementById("messageInput").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        });
+
+        // Populate chat when the page loads
+        window.onload = populateChat;
+    </script>
+</body>
+</html>

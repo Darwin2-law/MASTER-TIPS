@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Enter Predictions</title>
+    <link rel="stylesheet" href="stylesss.css">
+</head>
+<body>
+ <!-- Close Button -->
+ <a href="index.html" class="close-button">X</a>
+    <!-- Login Section -->
+    <div id="loginSection">
+        <h2>Admin Login</h2>
+        <form id="loginForm" onsubmit="return login()">
+            <label for="password">Password:</label>
+            <input type="password" id="password" placeholder="Enter password" required>
+            <button type="submit">Login</button>
+            <p id="errorMessage" style="color: red; display: none;">Incorrect password. Please try again.</p>
+        </form>
+    </div>
+
+    <!-- Admin Panel (Hidden Initially) -->
+    <div id="adminPanel" style="display: none;">
+        <h2>Admin Panel</h2>
+
+        <!-- Dropdown for Category Selection -->
+        <label for="iconCategory">Select Category:</label>
+        <select id="iconCategory">
+            <option value="Jackpot">Jackpot</option>
+            <option value="Mega Jackpot">Mega Jackpot</option>
+            <option value="VIP">VIP</option>
+            <option value="Fixed Odds">Fixed Odds</option>
+        </select>
+
+        <h3>Enter Predictions for Selected Category</h3>
+
+        <!-- Table for Admin Input -->
+        <table id="predictionTable">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Team A</th>
+                    <th>Team B</th>
+                    <th>Win</th>
+                    <th>Draw</th>
+                    <th>Loss</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="text" class="number" placeholder="Enter number or text"></td>
+                    <td><input type="text" class="teamA" placeholder="Enter Team A"></td>
+                    <td><input type="text" class="teamB" placeholder="Enter Team B"></td>
+                    <td><input type="text" class="win" placeholder="0"></td>
+                    <td><input type="text" class="draw" placeholder="0"></td>
+                    <td><input type="text" class="loss" placeholder="0"></td>
+                    <td><button type="button" onclick="removeRow(this)">Remove</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Buttons for Adding Rows, Saving Data, and Clearing Data -->
+        <button onclick="addRow()">Add Row</button>
+        <button onclick="saveData()">Save Data</button>
+        <button onclick="clearCategoryData()">Clear Data for Selected Category</button>
+
+        <h3>Clear Chat Data</h3>
+        <button onclick="clearChat()">Clear Chat</button>
+
+    </div>
+
+    <script>
+        // Admin login function
+        function login() {
+            const password = document.getElementById("password").value;
+            if (password === "???:::@#") {
+                // Hide the login section and show the admin panel
+                document.getElementById("loginSection").style.display = "none";
+                document.getElementById("adminPanel").style.display = "block";
+                return false;
+            } else {
+                document.getElementById("errorMessage").style.display = "block";
+                return false;
+            }
+        }
+
+        // Add a new row in the table for more data entry
+        function addRow() {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td><input type="text" class="number" placeholder="Enter number or text"></td>
+                <td><input type="text" class="teamA" placeholder="Enter Team A"></td>
+                <td><input type="text" class="teamB" placeholder="Enter Team B"></td>
+                <td><input type="text" class="win" placeholder="0"></td>
+                <td><input type="text" class="draw" placeholder="0"></td>
+                <td><input type="text" class="loss" placeholder="0"></td>
+                <td><button type="button" onclick="removeRow(this)">Remove</button></td>
+            `;
+            document.querySelector("#predictionTable tbody").appendChild(row);
+        }
+
+        // Remove a specific row when the "Remove" button is clicked
+        function removeRow(button) {
+            const row = button.parentNode.parentNode;
+            row.remove();
+        }
+
+        // Save data to localStorage
+        function saveData() {
+            const category = document.getElementById("iconCategory").value;
+            const rows = document.querySelectorAll("#predictionTable tbody tr");
+
+            const data = Array.from(rows).map(row => ({
+                teamA: row.querySelector(".teamA").value || "N/A",
+                teamB: row.querySelector(".teamB").value || "N/A",
+                win: row.querySelector(".win").value || "0",
+                draw: row.querySelector(".draw").value || "0",
+                loss: row.querySelector(".loss").value || "0",
+            }));
+
+            localStorage.setItem(category, JSON.stringify(data));
+            alert(`Data for ${category} saved successfully!`);
+        }
+
+        // Clear data for the selected category
+        function clearCategoryData() {
+            const category = document.getElementById("iconCategory").value;
+            localStorage.removeItem(category);
+            alert(`Data for ${category} has been cleared.`);
+        }
+
+        // Clear chat data from localStorage and the page
+        function clearChat() {
+            localStorage.removeItem("ChatMessages");
+            alert("Chat has been cleared.");
+            document.getElementById("chatContainer").innerHTML = "";  // Clear chat display
+        }
+    </script>
+
+</body>
+</html>

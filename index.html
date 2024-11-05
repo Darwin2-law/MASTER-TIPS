@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WELCOME TO MASTER TIPS</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash/4.17.21/lodash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tensorflow/4.2.0/tf.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            line-height: 1.5;
+            color: #1a1a1a;
+            background: #f0f2f5;
+
+.icon-bar {
+    display: flex;
+    background-color: indianred;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    justify-content: space-around;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.icon {
+    color: #fff;
+    text-align: center;
+    flex-grow: 1;
+    cursor: pointer;
+    position: relative;
+}
+
+.icon i {
+    font-size: 24px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.icon span {
+    font-size: 12px;
+}
+
+.icon:hover {
+    background-color:black;
+    width: 20px;
+    height: 20x;
+    border-radius: 10px;
+}
+
+.badge {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    background-color: red;
+    color: white;
+    padding: 2px 6px;
+    font-size: 10px;
+    border-radius: 50%;
+}
+
+/* Modal styling */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+}
+
+.close-button {
+    color:red;
+    float: right;
+    font-size: 20px;
+    cursor: pointer;
+}
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .team-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .ml-insights {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .pitch-view {
+            background: #4ade80;
+            position: relative;
+            width: 100%;
+            height: 600px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .heat-map {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.7;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .stats-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .prediction-details {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .error {
+            color: #dc2626;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="ball"><i class="fas fa-football-ball"></i></div>
+    <title>Welcome to Master Tips</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="ball.css">
+    <div class="title-container">
+        <h1 class="title">WELCOME TO MASTER TIPS</h1>
+    </div>
+    <div class="header">
+        <h2>Advanced Match Predictor</h2>
+        <h3>click booking icon to communicate with admin</h3>
+        <p>We offer sure bet tips</p>
+    </div>
+    <div class="admin-profile">
+        <img src="image/admin-icon.png" alt="Admin Icon" class="admin-icon">
+        <p>Admin</p>
+    </div>
+
+    
+        <!-- Admin Control Icon Bar -->
+        <div class="icon-bar" id="adminBar">
+            <div class="icon" id="adminIcon" title="Admin">
+                <i class="fas fa-user-shield"></i>
+                <span>Admin</span>
+            </div>
+            <div class="icon" id="communityChart" title="Community Charts">
+                <i class="fas fa-chart-line"></i>
+                <span>Charts</span>
+                <span class="badge">New</span> <!-- Notification badge -->
+            </div>
+            <div class="icon" id="vipGames" title="VIP Games">
+                <i class="fas fa-crown"></i>
+                <span>Vip Games</span>
+            </div>
+         
+            <div class="icon" id="fixed_Odds" title="Fixed Odds">
+                <i class="fas fa-percent"></i>
+                <span>Fixed Odds</span>
+            </div>
+            <div class="icon" id="jackpot" title="Jackpot">
+                <i class="fas fa-gift"></i>
+                <span>Jackpot</span>
+            </div>
+            <div class="icon" id="megaJackpot" title="Mega Jackpot">
+                <i class="fas fa-star"></i>
+                <span>megaJackpot</span>
+            </div>
+            <div class="icon" id="booking" title="Booking (WhatsApp)">
+                <i class="fab fa-whatsapp"></i>
+                <span>Booking</span>
+            </div>
+            <div class="icon" id="themeToggle" title="Toggle Theme">
+                <i class="fas fa-adjust"></i>
+                <span>Theme</span>
+            </div>
+        </div>
+    
+        <!-- Modals for Icon Actions -->
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <div id="modalContent"></div> <!-- Dynamic content will be loaded here -->
+            </div>
+        </div>
+    
+        <script src="script.js"></script>
+    <div class="container">
+       
+
+        <div class="team-selector">
+            <select id="team1Select">
+                <option value="">Select Home Team</option>
+            </select>
+            <select id="team2Select">
+                <option value="">Select Away Team</option>
+            </select>
+        </div>
+
+        <button id="predictButton" onclick="runPrediction()">Generate Prediction</button>
+        
+        <div id="loading" class="loading">Analyzing match data...</div>
+        <div id="error" class="error"></div>
+
+        <div id="predictionResult"></div>
+        
+        <div id="mlInsights" class="ml-insights">
+            <h3>Machine Learning Insights</h3>
+            <div class="stats-grid">
+                <div class="stats-card">
+                    <h4>Win Probability Distribution</h4>
+                    <canvas id="winProbChart"></canvas>
+                </div>
+                <div class="stats-card">
+                    <h4>Team Performance Comparison</h4>
+                    <canvas id="radarChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div id="matchAnalysis">
+            <div class="pitch-view">
+                <canvas id="heatMap"></canvas>
+            </div>
+            <div class="stats-card">
+                <h4>Match Momentum</h4>
+                <canvas id="momentumChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    const adminAccess = true; // Set to true if user is admin, otherwise false.
+
+    const adminBar = document.getElementById("adminBar");
+    const modal = document.getElementById("modal");
+    const modalContent = document.getElementById("modalContent");
+    const closeButton = document.querySelector(".close-button");
+
+    // Admin authentication check
+    if (!adminAccess) {
+        adminBar.style.display = "none";
+    }
+
+    // Open WhatsApp group on Booking icon click
+    const bookingIcon = document.getElementById("booking");
+    bookingIcon.addEventListener("click", function () {
+        window.open("https://chat.whatsapp.com/YOUR-GROUP-LINK", "_blank");
+    });
+
+    // Toggle theme
+    const themeToggle = document.getElementById("themeToggle");
+    themeToggle.addEventListener("click", function () {
+        document.body.classList.toggle("dark-theme");
+    });
+
+    // Event listeners for icons to open modals
+    document.querySelectorAll('.icon').forEach(icon => {
+        icon.addEventListener("click", function () {
+            const title = icon.getAttribute("title");
+            modalContent.innerHTML = `<h2>${title}</h2><p>Details about ${title} will be displayed here.</p>`;
+            modal.style.display = "flex";
+        });
+    });
+
+    // Close modal
+    closeButton.addEventListener("click", function () {
+        modal.style.display = "none";
+    });
+
+    // Close modal when clicking outside of content
+    window.addEventListener("click", function (e) {
+        if (e.target === modal) {
+            modal.style.display = "none";
+        }
+    });
+});
+
+        const teamsData = {
+            "Manchester City": {
+                recentForm: [1, 1, 1, 0, 1],
+                goals: { scored: 45, conceded: 18, xG: 42.5, xGA: 20.1 },
+                possession: 65.2,
+                shotConversion: 12.8,
+                strength: { attack: 90, defense: 85, midfield: 88, overall: 89 }
+            },
+            "Liverpool": {
+                recentForm: [1, 1, 0, 1, 1],
+                goals: { scored: 42, conceded: 20, xG: 39.8, xGA: 22.3 },
+                possession: 62.5,
+                shotConversion: 11.5,
+                strength: { attack: 88, defense: 82, midfield: 85, overall: 86 }
+            },
+            "Arsenal": {
+                recentForm: [1, 0, 1, 1, 0],
+                goals: { scored: 38, conceded: 22, xG: 36.2, xGA: 24.5 },
+                possession: 60.8,
+                shotConversion: 10.9,
+                strength: { attack: 85, defense: 83, midfield: 84, overall: 84 }
+            },
+        };
+
+        function initializeTeamSelectors() {
+            const teams = Object.keys(teamsData);
+            const team1Select = document.getElementById('team1Select');
+            const team2Select = document.getElementById('team2Select');
+
+            teams.forEach(team => {
+                team1Select.add(new Option(team, team));
+                team2Select.add(new Option(team, team));
+            });
+        }
+
+        class MatchPredictor {
+            constructor() {
+                this.model = this.buildModel();
+                this.initialized = false;
+            }
+
+            buildModel() {
+                const model = tf.sequential({
+                    layers: [
+                        tf.layers.dense({ inputShape: [10], units: 64, activation: 'relu' }),
+                        tf.layers.dropout({ rate: 0.2 }),
+                        tf.layers.dense({ units: 32, activation: 'relu' }),
+                        tf.layers.dense({ units: 3, activation: 'softmax' })
+                    ]
+                });
+
+                model.compile({
+                    optimizer: tf.train.adam(0.001),
+                    loss: 'categoricalCrossentropy',
+                    metrics: ['accuracy']
+                });
+
+                return model;
+            }
+
+            async initialize() {
+                if (!this.initialized) {
+                    const dummyFeatures = tf.randomNormal([100, 10]);
+                    const dummyLabels = tf.randomUniform([100, 3]);
+                    
+                    await this.model.fit(dummyFeatures, dummyLabels, { epochs: 5, verbose: 0 });
+                    this.initialized = true;
+                }
+            }
+
+            async predict(features) {
+                await this.initialize();
+                const tensorFeatures = tf.tensor2d([features]);
+                const prediction = await this.model.predict(tensorFeatures).array();
+                tensorFeatures.dispose();
+                return prediction[0];
+            }
+        }
+
+        class MatchAnalytics {
+            constructor() {
+                this.predictor = new MatchPredictor();
+                this.charts = {};
+                this.initializeCharts();
+            }
+
+            initializeCharts() {
+                this.initWinProbChart();
+                this.initRadarChart();
+                this.initMomentumChart();
+                this.initHeatMap();
+            }
+
+            initWinProbChart() {
+                const ctx = document.getElementById('winProbChart').getContext('2d');
+                this.charts.winProb = new Chart(ctx, {
+                    type: 'bar',
+                    data: { labels: ['Home Win', 'Draw', 'Away Win'], datasets: [{ label: 'Probability', data: [0, 0, 0], backgroundColor: ['#2563eb', '#grey', '#dc2626'] }] },
+                    options: { responsive: true, scales: { y: { beginAtZero: true, max: 100 } } }
+                });
+            }
+
+            initRadarChart() {
+                const ctx = document.getElementById('radarChart').getContext('2d');
+                this.charts.radar = new Chart(ctx, {
+                    type: 'radar',
+                    data: { labels: ['Attack', 'Defense', 'Midfield', 'Overall'], datasets: [{ label: 'Home Team', data: [0, 0, 0, 0], backgroundColor: 'rgba(37, 99, 235, 0.4)' }, { label: 'Away Team', data: [0, 0, 0, 0], backgroundColor: 'rgba(220, 38, 38, 0.4)' }] },
+                    options: { responsive: true, scales: { r: { suggestedMin: 0, suggestedMax: 100 } } }
+                });
+            }
+
+            initMomentumChart() {
+                const ctx = document.getElementById('momentumChart').getContext('2d');
+                this.charts.momentum = new Chart(ctx, {
+                    type: 'line',
+                    data: { labels: Array.from({ length: 90 }, (_, i) => i + 1), datasets: [{ label: 'Home Momentum', data: [], backgroundColor: 'rgba(37, 99, 235, 0.4)', borderColor: '#2563eb', fill: true }, { label: 'Away Momentum', data: [], backgroundColor: 'rgba(220, 38, 38, 0.4)', borderColor: '#dc2626', fill: true }] },
+                    options: { responsive: true, scales: { y: { beginAtZero: true } } }
+                });
+            }
+
+            initHeatMap() {
+                const ctx = document.getElementById('heatMap').getContext('2d');
+                this.charts.heatMap = new Chart(ctx, {
+                    type: 'scatter',
+                    data: { datasets: [{ label: 'Ball Possession', data: Array.from({ length: 50 }, () => ({ x: Math.random() * 100, y: Math.random() * 100 })), backgroundColor: 'rgba(37, 99, 235, 0.8)' }] },
+                    options: { responsive: true, scales: { x: { display: false, min: 0, max: 100 }, y: { display: false, min: 0, max: 100 } } }
+                });
+            }
+
+            updateCharts(homeTeam, awayTeam, prediction) {
+                const homeData = teamsData[homeTeam];
+                const awayData = teamsData[awayTeam];
+                const winProbs = prediction.map(p => (p * 100).toFixed(1));
+
+                this.charts.winProb.data.datasets[0].data = winProbs;
+                this.charts.winProb.update();
+
+                this.charts.radar.data.datasets[0].data = Object.values(homeData.strength);
+                this.charts.radar.data.datasets[1].data = Object.values(awayData.strength);
+                this.charts.radar.update();
+
+                this.charts.momentum.data.datasets[0].data = this.calculateMomentum(homeData.recentForm);
+                this.charts.momentum.data.datasets[1].data = this.calculateMomentum(awayData.recentForm);
+                this.charts.momentum.update();
+
+                this.initHeatMap();
+            }
+
+            calculateMomentum(recentForm) {
+                return recentForm.flatMap(val => Array(18).fill(val === 1 ? 70 : val === 0 ? 50 : 30));
+            }
+        }
+
+        const analytics = new MatchAnalytics();
+        initializeTeamSelectors();
+
+        async function runPrediction() {
+            const team1 = document.getElementById('team1Select').value;
+            const team2 = document.getElementById('team2Select').value;
+            const errorDiv = document.getElementById('error');
+
+            if (!team1 || !team2 || team1 === team2) {
+                errorDiv.style.display = 'block';
+                errorDiv.innerText = "Please select two different teams.";
+                return;
+            }
+
+            errorDiv.style.display = 'none';
+            document.getElementById('loading').style.display = 'block';
+
+            const features = [...teamsData[team1].recentForm, ...teamsData[team2].recentForm];
+            const prediction = await analytics.predictor.predict(features);
+
+            document.getElementById('loading').style.display = 'none';
+            analytics.updateCharts(team1, team2, prediction);
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+    const title = document.querySelector('.title');
+    const adminIcon = document.querySelector('.admin-icon');
+
+    // Add bounce effect on hover for title
+    title.addEventListener('mouseover', function() {
+        title.classList.add('bounce');
+    });
+
+    title.addEventListener('mouseout', function() {
+        title.classList.remove('bounce');
+    });
+
+    // Rotate admin icon every few seconds
+    setInterval(() => {
+        adminIcon.classList.add('rotate');
+        setTimeout(() => {
+            adminIcon.classList.remove('rotate');
+        }, 1000); // Duration of the rotation effect
+    }, 3000); // Repeat every 3 seconds
+});
+
+    </script>
+</body>
+</html>

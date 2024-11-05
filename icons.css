@@ -1,0 +1,77 @@
+/* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4; /* Light gray background */
+    color: #333; /* Dark text for readability */
+    padding: 20px;
+}
+
+/* Close button styling */
+.close-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    text-decoration: none;
+    font-size: 24px;
+    color: #d9534f; /* Bootstrap Danger color */
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff; /* White background for the table */
+    border-radius: 8px;
+    overflow: hidden; /* For rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f7f7f7; /* Light gray header */
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9; /* Zebra striping for table rows */
+}
+
+tr:hover {
+    background-color: #f1f1f1; /* Highlight row on hover */
+}
+
+/* Button styling */
+button {
+    background-color: #5bc0de; /* Bootstrap Info color */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #31b0d5; /* Darker shade on hover */
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}

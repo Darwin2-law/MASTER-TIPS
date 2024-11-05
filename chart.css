@@ -1,0 +1,85 @@
+/* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e9ecef; /* Light gray background for the entire body */
+    color: #333; /* Dark text for readability */
+    padding: 20px;
+}
+
+/* Close button styling */
+.close-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    text-decoration: none;
+    font-size: 24px;
+    color: #d9534f; /* Bootstrap Danger color */
+}
+
+/* Title styling */
+h2 {
+    margin-bottom: 20px;
+    color: #007bff; /* Primary color for the title */
+}
+
+/* Chat container styling */
+.chat-container {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff; /* White background for the chat container */
+    max-height: 400px; /* Limit height */
+    overflow-y: auto; /* Enable scrolling */
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+/* Message styling */
+.message {
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 10px;
+    background-color: #f1f1f1; /* Light gray for message background */
+}
+
+/* Message input section */
+.message-input {
+    display: flex;
+}
+
+/* Input field styling */
+.message-input input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+/* Button styling */
+button {
+    background-color: #5bc0de; /* Bootstrap Info color */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #31b0d5; /* Darker shade on hover */
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}

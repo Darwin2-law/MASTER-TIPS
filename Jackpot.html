@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jackpot Predictions</title>
+    <link rel="stylesheet" href="icons.css">
+</head>
+<body>
+    <!-- Close Button -->
+    <a href="index.html" class="close-button">X</a>
+    <h2>Jackpot Predictions</h2>
+
+    <!-- Jackpot Predictions Table -->
+    <table id="jackpotTable">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Team A</th>
+                <th>Team B</th>
+                <th>Win</th>
+                <th>Draw</th>
+                <th>Loss</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will be populated here -->
+        </tbody>
+    </table>
+
+
+ 
+
+    <script>
+        // Function to populate the jackpot table with saved data
+        function populateTable() {
+            const jackpotData = JSON.parse(localStorage.getItem("Jackpot")) || [];
+            const tableBody = document.querySelector("#jackpotTable tbody");
+            tableBody.innerHTML = ""; // Clear existing rows
+
+            jackpotData.forEach((item, index) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${item.teamA}</td>
+                    <td>${item.teamB}</td>
+                    <td>${item.win}</td>
+                    <td>${item.draw}</td>
+                    <td>${item.loss}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Clear jackpot data from localStorage and table
+        document.getElementById('clearTableBtn').addEventListener('click', function() {
+            if (confirm("Are you sure you want to clear this table?")) {
+                localStorage.removeItem('Jackpot');
+                populateTable(); // Refresh the table
+                alert("Jackpot data has been cleared.");
+            }
+        });
+
+        // Populate the table when the page loads
+        window.onload = populateTable;
+    </script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+
+img{
+    width:100px;
+    height:100px;
+    border-radius: 50px;
+    background-color: #e74c3c;
+    align-items: normal;
+}
+
+h1{
+    font-size: 3em;
+    font-weight: bold;
+    text-align: center;
+    color: #3498db;
+    animation: move-color 3s infinite alternate ease-in-out;
+}
+p{
+    color: blue;
+}
+
+@keyframes move-color {
+    0% {
+        color: #3498db;
+        transform: translateX(0);
+    }
+    25% {
+        color: burlywood;
+        transform: translateX(0);
+    }
+    
+    50% {
+        color: #e74c3c;
+        transform: translateX(20px);
+    }
+    75% {
+        color: indigo;
+        transform: translateX(0);
+    }
+    100% {
+        color: #9b59b6;
+        transform: translateX(-20px);
+    }
+}
+/* Bounce animation for the title */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+.bounce {
+    animation: bounce 0.5s;
+}
+
+/* Rotate animation for the admin icon */
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.rotate {
+    animation: rotate 1s ease-in-out;
+}
+
+
+
+
+        *{
+            box-sizing: border-box;
+
+    
+        }
